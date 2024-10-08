@@ -1,0 +1,253 @@
+
+AVR_EXTI.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000001ec  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 c3 00 	jmp	0x186	; 0x186 <__vector_1>
+   8:	0c 94 9d 00 	jmp	0x13a	; 0x13a <__vector_2>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 77 00 	jmp	0xee	; 0xee <__vector_18>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 e9 00 	call	0x1d2	; 0x1d2 <main>
+  64:	0c 94 f4 00 	jmp	0x1e8	; 0x1e8 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <GPIO_INIT>:
+  6c:	8d 9a       	sbi	0x11, 5	; 17
+  6e:	8e 9a       	sbi	0x11, 6	; 17
+  70:	8f 9a       	sbi	0x11, 7	; 17
+  72:	95 98       	cbi	0x12, 5	; 18
+  74:	96 98       	cbi	0x12, 6	; 18
+  76:	97 98       	cbi	0x12, 7	; 18
+  78:	8a 98       	cbi	0x11, 2	; 17
+  7a:	8b 98       	cbi	0x11, 3	; 17
+  7c:	ba 98       	cbi	0x17, 2	; 23
+  7e:	08 95       	ret
+
+00000080 <LED_ON>:
+  80:	92 b3       	in	r25, 0x12	; 18
+  82:	21 e0       	ldi	r18, 0x01	; 1
+  84:	30 e0       	ldi	r19, 0x00	; 0
+  86:	02 c0       	rjmp	.+4      	; 0x8c <LED_ON+0xc>
+  88:	22 0f       	add	r18, r18
+  8a:	33 1f       	adc	r19, r19
+  8c:	8a 95       	dec	r24
+  8e:	e2 f7       	brpl	.-8      	; 0x88 <LED_ON+0x8>
+  90:	92 2b       	or	r25, r18
+  92:	92 bb       	out	0x12, r25	; 18
+  94:	80 e1       	ldi	r24, 0x10	; 16
+  96:	97 e2       	ldi	r25, 0x27	; 39
+  98:	49 e1       	ldi	r20, 0x19	; 25
+  9a:	50 e0       	ldi	r21, 0x00	; 0
+  9c:	fa 01       	movw	r30, r20
+  9e:	31 97       	sbiw	r30, 0x01	; 1
+  a0:	f1 f7       	brne	.-4      	; 0x9e <LED_ON+0x1e>
+  a2:	01 97       	sbiw	r24, 0x01	; 1
+  a4:	d9 f7       	brne	.-10     	; 0x9c <LED_ON+0x1c>
+  a6:	82 b3       	in	r24, 0x12	; 18
+  a8:	20 95       	com	r18
+  aa:	28 23       	and	r18, r24
+  ac:	22 bb       	out	0x12, r18	; 18
+  ae:	08 95       	ret
+
+000000b0 <Global_Interrupt_Enable>:
+  b0:	8f b7       	in	r24, 0x3f	; 63
+  b2:	80 68       	ori	r24, 0x80	; 128
+  b4:	8f bf       	out	0x3f, r24	; 63
+  b6:	08 95       	ret
+
+000000b8 <EXTI0_INIT>:
+  b8:	85 b7       	in	r24, 0x35	; 53
+  ba:	81 60       	ori	r24, 0x01	; 1
+  bc:	85 bf       	out	0x35, r24	; 53
+  be:	85 b7       	in	r24, 0x35	; 53
+  c0:	8d 7f       	andi	r24, 0xFD	; 253
+  c2:	85 bf       	out	0x35, r24	; 53
+  c4:	8b b7       	in	r24, 0x3b	; 59
+  c6:	80 64       	ori	r24, 0x40	; 64
+  c8:	8b bf       	out	0x3b, r24	; 59
+  ca:	08 95       	ret
+
+000000cc <EXTI1_INIT>:
+  cc:	85 b7       	in	r24, 0x35	; 53
+  ce:	84 60       	ori	r24, 0x04	; 4
+  d0:	85 bf       	out	0x35, r24	; 53
+  d2:	85 b7       	in	r24, 0x35	; 53
+  d4:	88 60       	ori	r24, 0x08	; 8
+  d6:	85 bf       	out	0x35, r24	; 53
+  d8:	8b b7       	in	r24, 0x3b	; 59
+  da:	80 68       	ori	r24, 0x80	; 128
+  dc:	8b bf       	out	0x3b, r24	; 59
+  de:	08 95       	ret
+
+000000e0 <EXTI2_INIT>:
+  e0:	84 b7       	in	r24, 0x34	; 52
+  e2:	8f 7b       	andi	r24, 0xBF	; 191
+  e4:	84 bf       	out	0x34, r24	; 52
+  e6:	8b b7       	in	r24, 0x3b	; 59
+  e8:	80 62       	ori	r24, 0x20	; 32
+  ea:	8b bf       	out	0x3b, r24	; 59
+  ec:	08 95       	ret
+
+000000ee <__vector_18>:
+  ee:	1f 92       	push	r1
+  f0:	0f 92       	push	r0
+  f2:	0f b6       	in	r0, 0x3f	; 63
+  f4:	0f 92       	push	r0
+  f6:	11 24       	eor	r1, r1
+  f8:	2f 93       	push	r18
+  fa:	3f 93       	push	r19
+  fc:	4f 93       	push	r20
+  fe:	5f 93       	push	r21
+ 100:	6f 93       	push	r22
+ 102:	7f 93       	push	r23
+ 104:	8f 93       	push	r24
+ 106:	9f 93       	push	r25
+ 108:	af 93       	push	r26
+ 10a:	bf 93       	push	r27
+ 10c:	ef 93       	push	r30
+ 10e:	ff 93       	push	r31
+ 110:	87 e0       	ldi	r24, 0x07	; 7
+ 112:	90 e0       	ldi	r25, 0x00	; 0
+ 114:	0e 94 40 00 	call	0x80	; 0x80 <LED_ON>
+ 118:	ff 91       	pop	r31
+ 11a:	ef 91       	pop	r30
+ 11c:	bf 91       	pop	r27
+ 11e:	af 91       	pop	r26
+ 120:	9f 91       	pop	r25
+ 122:	8f 91       	pop	r24
+ 124:	7f 91       	pop	r23
+ 126:	6f 91       	pop	r22
+ 128:	5f 91       	pop	r21
+ 12a:	4f 91       	pop	r20
+ 12c:	3f 91       	pop	r19
+ 12e:	2f 91       	pop	r18
+ 130:	0f 90       	pop	r0
+ 132:	0f be       	out	0x3f, r0	; 63
+ 134:	0f 90       	pop	r0
+ 136:	1f 90       	pop	r1
+ 138:	18 95       	reti
+
+0000013a <__vector_2>:
+ 13a:	1f 92       	push	r1
+ 13c:	0f 92       	push	r0
+ 13e:	0f b6       	in	r0, 0x3f	; 63
+ 140:	0f 92       	push	r0
+ 142:	11 24       	eor	r1, r1
+ 144:	2f 93       	push	r18
+ 146:	3f 93       	push	r19
+ 148:	4f 93       	push	r20
+ 14a:	5f 93       	push	r21
+ 14c:	6f 93       	push	r22
+ 14e:	7f 93       	push	r23
+ 150:	8f 93       	push	r24
+ 152:	9f 93       	push	r25
+ 154:	af 93       	push	r26
+ 156:	bf 93       	push	r27
+ 158:	ef 93       	push	r30
+ 15a:	ff 93       	push	r31
+ 15c:	86 e0       	ldi	r24, 0x06	; 6
+ 15e:	90 e0       	ldi	r25, 0x00	; 0
+ 160:	0e 94 40 00 	call	0x80	; 0x80 <LED_ON>
+ 164:	ff 91       	pop	r31
+ 166:	ef 91       	pop	r30
+ 168:	bf 91       	pop	r27
+ 16a:	af 91       	pop	r26
+ 16c:	9f 91       	pop	r25
+ 16e:	8f 91       	pop	r24
+ 170:	7f 91       	pop	r23
+ 172:	6f 91       	pop	r22
+ 174:	5f 91       	pop	r21
+ 176:	4f 91       	pop	r20
+ 178:	3f 91       	pop	r19
+ 17a:	2f 91       	pop	r18
+ 17c:	0f 90       	pop	r0
+ 17e:	0f be       	out	0x3f, r0	; 63
+ 180:	0f 90       	pop	r0
+ 182:	1f 90       	pop	r1
+ 184:	18 95       	reti
+
+00000186 <__vector_1>:
+ 186:	1f 92       	push	r1
+ 188:	0f 92       	push	r0
+ 18a:	0f b6       	in	r0, 0x3f	; 63
+ 18c:	0f 92       	push	r0
+ 18e:	11 24       	eor	r1, r1
+ 190:	2f 93       	push	r18
+ 192:	3f 93       	push	r19
+ 194:	4f 93       	push	r20
+ 196:	5f 93       	push	r21
+ 198:	6f 93       	push	r22
+ 19a:	7f 93       	push	r23
+ 19c:	8f 93       	push	r24
+ 19e:	9f 93       	push	r25
+ 1a0:	af 93       	push	r26
+ 1a2:	bf 93       	push	r27
+ 1a4:	ef 93       	push	r30
+ 1a6:	ff 93       	push	r31
+ 1a8:	85 e0       	ldi	r24, 0x05	; 5
+ 1aa:	90 e0       	ldi	r25, 0x00	; 0
+ 1ac:	0e 94 40 00 	call	0x80	; 0x80 <LED_ON>
+ 1b0:	ff 91       	pop	r31
+ 1b2:	ef 91       	pop	r30
+ 1b4:	bf 91       	pop	r27
+ 1b6:	af 91       	pop	r26
+ 1b8:	9f 91       	pop	r25
+ 1ba:	8f 91       	pop	r24
+ 1bc:	7f 91       	pop	r23
+ 1be:	6f 91       	pop	r22
+ 1c0:	5f 91       	pop	r21
+ 1c2:	4f 91       	pop	r20
+ 1c4:	3f 91       	pop	r19
+ 1c6:	2f 91       	pop	r18
+ 1c8:	0f 90       	pop	r0
+ 1ca:	0f be       	out	0x3f, r0	; 63
+ 1cc:	0f 90       	pop	r0
+ 1ce:	1f 90       	pop	r1
+ 1d0:	18 95       	reti
+
+000001d2 <main>:
+ 1d2:	0e 94 36 00 	call	0x6c	; 0x6c <GPIO_INIT>
+ 1d6:	0e 94 58 00 	call	0xb0	; 0xb0 <Global_Interrupt_Enable>
+ 1da:	0e 94 5c 00 	call	0xb8	; 0xb8 <EXTI0_INIT>
+ 1de:	0e 94 66 00 	call	0xcc	; 0xcc <EXTI1_INIT>
+ 1e2:	0e 94 70 00 	call	0xe0	; 0xe0 <EXTI2_INIT>
+ 1e6:	ff cf       	rjmp	.-2      	; 0x1e6 <main+0x14>
+
+000001e8 <_exit>:
+ 1e8:	f8 94       	cli
+
+000001ea <__stop_program>:
+ 1ea:	ff cf       	rjmp	.-2      	; 0x1ea <__stop_program>
